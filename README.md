@@ -1,5 +1,8 @@
 # Absol
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![License: MIT](https://img.shields.io/badge/Conventional%20Commits-1.0.0-green.svg)](https://www.conventionalcommits.org)
+
 A simple HTTP request handler that works without variable parameters in request paths.
 
 ### Install
