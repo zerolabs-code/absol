@@ -42,27 +42,27 @@ func (mux *Mux) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func (mux *Mux) HEAD(path string, handler http.Handler) {
+func (mux *Mux) Head(path string, handler http.Handler) {
 	pathHandlers := mux.getOrCreatePathHandlers(path)
 	pathHandlers[http.MethodHead] = handler
 }
 
-func (mux *Mux) GET(path string, handler http.Handler) {
+func (mux *Mux) Get(path string, handler http.Handler) {
 	pathHandlers := mux.getOrCreatePathHandlers(path)
 	pathHandlers[http.MethodGet] = handler
 }
 
-func (mux *Mux) POST(path string, handler http.Handler) {
+func (mux *Mux) Post(path string, handler http.Handler) {
 	pathHandlers := mux.getOrCreatePathHandlers(path)
 	pathHandlers[http.MethodPost] = handler
 }
 
-func (mux *Mux) PUT(path string, handler http.Handler) {
+func (mux *Mux) Put(path string, handler http.Handler) {
 	pathHandlers := mux.getOrCreatePathHandlers(path)
 	pathHandlers[http.MethodPut] = handler
 }
 
-func (mux *Mux) DELETE(path string, handler http.Handler) {
+func (mux *Mux) Delete(path string, handler http.Handler) {
 	pathHandlers := mux.getOrCreatePathHandlers(path)
 	pathHandlers[http.MethodDelete] = handler
 }
