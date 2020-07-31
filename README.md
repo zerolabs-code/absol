@@ -25,10 +25,15 @@ import (
 
 func main() {
     mux := absol.NewMux()
-    mux.GET("/users", api.GetUsers)
-    mux.POST("/users", api.CreateUser)
-    mux.GET("/user", api.GetUser)
-    mux.DELETE("/user", api.DeleteUser)
+
+    // users endpoints
+    mux.Get("/users", api.GetUsers)
+    mux.Post("/users", api.CreateUser)
+
+    // user endpoints
+    mux.Get("/user", api.GetUser)
+    mux.Delete("/user", api.DeleteUser)
+
     log.Fatalln(http.ListenAndServe(":8080", mux))
 }
 ```
