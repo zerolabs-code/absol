@@ -5,12 +5,14 @@ import (
 )
 
 type Mux struct {
-	handlers map[string]map[string]http.Handler
+	handlers   map[string]map[string]http.Handler
+	middleware Middleware
 }
 
 func NewMux() *Mux {
 	mux := new(Mux)
 	mux.handlers = make(map[string]map[string]http.Handler)
+	mux.middleware = nil
 	return mux
 }
 
@@ -31,7 +33,11 @@ func (mux *Mux) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		if handler, found := handlers[r.Method]; !found {
 			http.Error(w, "handler not registered for the given HTTP verb", http.StatusMethodNotAllowed)
 		} else {
-			handler.ServeHTTP(w, r)
+			if mux.middleware != nil {
+				mux.middleware(handler).ServeHTTP(w, r)
+			} else {
+				handler.ServeHTTP(w, r)
+			}
 		}
 	}
 }
@@ -59,4 +65,12 @@ func (mux *Mux) PUT(path string, handler http.Handler) {
 func (mux *Mux) DELETE(path string, handler http.Handler) {
 	pathHandlers := mux.getOrCreatePathHandlers(path)
 	pathHandlers[http.MethodDelete] = handler
+}
+
+func (mux *Mux) Use(m Middleware) {
+	if mux.middleware == nil {
+		mux.middleware = m
+	} else {
+		mux.middleware = compose(m, mux.middleware)
+	}
 }
